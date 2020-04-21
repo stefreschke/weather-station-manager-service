@@ -1,4 +1,4 @@
-package de.stefreschke.services.web.firstservice;
+package de.stefreschke.services.firstservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

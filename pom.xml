@@ -8,27 +8,31 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/>
     </parent>
-    <groupId>de.stefreschke.services.web</groupId>
+    <groupId>de.stefreschke.services</groupId>
     <artifactId>first-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>first-service</name>
+    <name>firstservice</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
         <org.junit.jupiter.version>5.6.2</org.junit.jupiter.version>
-        <swagger-annotations-version>1.5.22</swagger-annotations-version>
-        <maven-plugin-version>1.0.0</maven-plugin-version>
+        <io.swagger.core.v3.version>2.1.2</io.swagger.core.v3.version>
         <springfox-version>2.9.2</springfox-version>
         <jackson-databind-nullable>0.2.1</jackson-databind-nullable>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>${io.swagger.core.v3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations-version}</version>
+            <version>${io.swagger.core.v3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,47 +88,67 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-						<configuration>
-							<mainClass>de.stefreschke.services.web.firstservice.FirstServiceApplication</mainClass>
-						</configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>4.3.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>
-                                ${project.basedir}/src/main/resources/openapi/api.yaml
-                            </inputSpec>
-                            <generatorName>spring</generatorName>
-                            <apiPackage>${project.groupId}.firstservice.api</apiPackage>
-                            <modelPackage>${project.groupId}.firstservice.model</modelPackage>
-                            <configOptions>
-                                <delegatePattern>true</delegatePattern>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+    <profiles>
+        <profile>
+            <id>build-default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
 
-        </plugins>
-    </build>
+                <resources>
+                    <resource>
+                        <directory>src/main/templates</directory>
+                        <filtering>true</filtering>
+                        <targetPath>${project.build.directory}/classes</targetPath>
+                    </resource>
+                    <resource>
+                        <directory>src/main/docker</directory>
+                        <filtering>true</filtering>
+                        <targetPath>${project.build.directory}</targetPath>
+                    </resource>
 
+                    <resource>
+                        <directory>target/generated-sources/openapi/src/main/java</directory>
+                        <includes>
+                            <include>**/*.java</include>
+                            <include>**/*.properties</include>
+                            <include>**/*.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.openapitools</groupId>
+                        <artifactId>openapi-generator-maven-plugin</artifactId>
+                        <version>4.3.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <inputSpec>src/main/resources/openapi/api.yaml</inputSpec>
+                                    <generatorName>spring</generatorName>
+                                    <library>spring-mvc</library>
+                                    <configOptions>
+                                        <serializationLibrary>gson</serializationLibrary>
+                                        <sourceFolder>src/main/java</sourceFolder>
+                                        <delegatePattern>true</delegatePattern>
+                                    </configOptions>
+                                    <apiPackage>${project.groupId}.${project.name}.api</apiPackage>
+                                    <modelPackage>${project.groupId}.${project.name}.model</modelPackage>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

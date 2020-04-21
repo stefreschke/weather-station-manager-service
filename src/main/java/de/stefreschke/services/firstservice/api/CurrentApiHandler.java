@@ -1,7 +1,7 @@
-package de.stefreschke.services.web.firstservice.api;
+package de.stefreschke.services.firstservice.api;
 
-import de.stefreschke.services.web.firstservice.model.QualitfiedWeatherSnapshot;
-import de.stefreschke.services.web.firstservice.model.UnqualifiedWeatherSnapshot;
+import de.stefreschke.services.firstservice.model.QualitfiedWeatherSnapshot;
+import de.stefreschke.services.firstservice.model.UnqualifiedWeatherSnapshot;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

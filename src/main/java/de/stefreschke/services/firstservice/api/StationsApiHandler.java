@@ -1,6 +1,6 @@
-package de.stefreschke.services.web.firstservice.api;
+package de.stefreschke.services.firstservice.api;
 
-import de.stefreschke.services.web.firstservice.model.WeatherStation;
+import de.stefreschke.services.firstservice.model.WeatherStation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

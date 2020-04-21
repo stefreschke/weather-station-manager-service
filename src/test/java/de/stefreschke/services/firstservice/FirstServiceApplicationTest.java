@@ -1,4 +1,4 @@
-package de.stefreschke.services.web.firstservice;
+package de.stefreschke.services.firstservice;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
