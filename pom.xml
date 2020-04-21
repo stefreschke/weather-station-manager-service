@@ -30,11 +30,6 @@
             <version>${io.swagger.core.v3.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${io.swagger.core.v3.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -143,6 +138,7 @@
                                     </configOptions>
                                     <apiPackage>${project.groupId}.${project.name}.api</apiPackage>
                                     <modelPackage>${project.groupId}.${project.name}.model</modelPackage>
+                                    <generateModelTests>true</generateModelTests>
                                 </configuration>
                             </execution>
                         </executions>
